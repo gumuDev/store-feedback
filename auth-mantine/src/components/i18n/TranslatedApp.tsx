@@ -8,6 +8,7 @@ import {
   ThemedLayoutV2,
   ErrorComponent,
   useNotificationProvider,
+  AuthPage,
 } from "@refinedev/mantine";
 import { dataProvider } from "@refinedev/supabase";
 import { supabaseClient } from "../../utility/supabaseClient";
@@ -26,9 +27,14 @@ import { CustomTitle } from "../logobrand/CustomTitle";
 
 interface TranslatedAppProps {
   authProvider: AuthProvider;
+  authCredentials: {
+    email: string;
+    password: string;
+    name: string;
+  };
 }
 
-export const TranslatedApp: React.FC<TranslatedAppProps> = ({ authProvider }) => {
+export const TranslatedApp: React.FC<TranslatedAppProps> = ({ authProvider, authCredentials }) => {
   const { t } = useTranslation();
 
   return (
@@ -134,6 +140,39 @@ export const TranslatedApp: React.FC<TranslatedAppProps> = ({ authProvider }) =>
         >
           <Route path="*" element={<ErrorComponent />} />
         </Route>
+
+        {/* Auth Routes - Outside authenticated area */}
+        <Route
+          path="/login"
+          element={
+            <AuthPage
+              type="login"
+              title="Store Feedback"
+              formProps={{
+                initialValues: {
+                  ...authCredentials,
+                },
+              }}
+            />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <AuthPage
+              type="register"
+              title="Store Feedback"
+            />
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={<AuthPage type="forgotPassword" title="Store Feedback" />}
+        />
+        <Route
+          path="/update-password"
+          element={<AuthPage type="updatePassword" title="Store Feedback" />}
+        />
       </Routes>
       <UnsavedChangesNotifier />
       <DocumentTitleHandler />

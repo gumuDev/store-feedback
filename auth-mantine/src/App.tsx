@@ -1,17 +1,12 @@
 import {
   type AuthProvider,
-  Authenticated,
 } from "@refinedev/core";
 import {
-  AuthPage,
   RefineThemes,
 } from "@refinedev/mantine";
 import { NotificationsProvider } from "@mantine/notifications";
 import { MantineProvider, Global } from "@mantine/core";
-import {
-  NavigateToResource,
-} from "@refinedev/react-router";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router";
+import { BrowserRouter } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { StandaloneFeedback } from "./pages/feedback/StandaloneFeedback";
@@ -157,49 +152,7 @@ const App: React.FC = () => {
         >
           <Global styles={{ body: { WebkitFontSmoothing: "auto" } }} />
           <NotificationsProvider position="top-right">          
-            <TranslatedApp authProvider={authProvider} />
-            
-            <Routes>
-              <Route
-                element={
-                  <Authenticated key="auth-pages" fallback={<Outlet />}>
-                    <NavigateToResource resource="feedback_responses" />
-                  </Authenticated>
-                }
-              >
-                <Route
-                  path="/login"
-                  element={
-                    <AuthPage
-                      type="login"
-                      title="Store Feedback"
-                      formProps={{
-                        initialValues: {
-                          ...authCredentials,
-                        },
-                      }}
-                    />
-                  }
-                />
-                <Route
-                  path="/register"
-                  element={
-                    <AuthPage
-                      type="register"
-                      title="Store Feedback"
-                    />
-                  }
-                />
-                <Route
-                  path="/forgot-password"
-                  element={<AuthPage type="forgotPassword" title="Store Feedback" />}
-                />
-                <Route
-                  path="/update-password"
-                  element={<AuthPage type="updatePassword" title="Store Feedback" />}
-                />
-              </Route>
-            </Routes>
+            <TranslatedApp authProvider={authProvider} authCredentials={authCredentials} />
         </NotificationsProvider>
       </MantineProvider>
     </QueryClientProvider>
