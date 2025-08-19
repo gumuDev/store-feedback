@@ -163,6 +163,11 @@ const App: React.FC = () => {
       >
         <Global styles={{ body: { WebkitFontSmoothing: "auto" } }} />
         <NotificationsProvider position="top-right">
+          <Routes>
+            {/* Public feedback route - completely outside Refine context */}
+            <Route path="/feedback" element={<FeedbackPage />} />
+          </Routes>
+          
           <Refine
             dataProvider={dataProvider(supabaseClient)}
             authProvider={authProvider}
@@ -277,8 +282,6 @@ const App: React.FC = () => {
                 <Route path="/about" element={<AboutList />} />
               </Route>
 
-              {/* Public feedback route - no authentication required */}
-              <Route path="/feedback" element={<FeedbackPage />} />
 
               <Route
                 element={

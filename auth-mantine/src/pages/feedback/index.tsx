@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useCreate, useList } from "@refinedev/core";
 import type { ISuggestion, IComplaint } from "../../interfaces";
+import { supabaseClient } from "../../utility/supabaseClient";
 import {
   Container,
   Paper,
@@ -35,23 +35,33 @@ export const FeedbackPage: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { mutate: createFeedbackResponse } = useCreate({
-    resource: "feedback_responses",
-    successNotification: false,
-    errorNotification: false,
-  });
+  // Direct Supabase calls without Refine hooks
+  const [suggestionsData, setSuggestionsData] = useState<ISuggestion[]>([]);
+  const [complaintsData, setComplaintsData] = useState<IComplaint[]>([]);
 
-  // Obtener suggestions activas (approved)
-  const { data: suggestionsData } = useList<ISuggestion>({
-    resource: "suggestions",
-    filters: [{ field: "status", operator: "eq", value: "approved" }],
-  });
+  // Load active suggestions and complaints on component mount
+  React.useEffect(() => {
+    const loadData = async () => {
+      try {
+        const { data: suggestions } = await supabaseClient
+          .from('suggestions')
+          .select('*')
+          .eq('status', 'approved');
+        
+        const { data: complaints } = await supabaseClient
+          .from('complaints')
+          .select('*')
+          .eq('status', 'resolved');
 
-  // Obtener complaints activos (resolved)
-  const { data: complaintsData } = useList<IComplaint>({
-    resource: "complaints",
-    filters: [{ field: "status", operator: "eq", value: "resolved" }],
-  });
+        setSuggestionsData(suggestions || []);
+        setComplaintsData(complaints || []);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const handleTypeSelection = (type: FeedbackType) => {
     setSelectedType(type);
@@ -75,13 +85,13 @@ export const FeedbackPage: React.FC = () => {
     // Obtener reference_id de la tabla correspondiente basado en el tipo y status activo
     let reference_id = 1; // fallback por defecto
     
-    if (selectedType === "suggestion" && suggestionsData?.data?.length) {
+    if (selectedType === "suggestion" && suggestionsData.length > 0) {
       // Obtener el primer suggestion activo (approved)
-      const activeSuggestion = suggestionsData.data.find(s => s.status === "approved");
+      const activeSuggestion = suggestionsData.find(s => s.status === "approved");
       reference_id = activeSuggestion?.id || 1;
-    } else if (selectedType === "complaint" && complaintsData?.data?.length) {
+    } else if (selectedType === "complaint" && complaintsData.length > 0) {
       // Obtener el primer complaint activo (resolved)
-      const activeComplaint = complaintsData.data.find(c => c.status === "resolved");
+      const activeComplaint = complaintsData.find(c => c.status === "resolved");
       reference_id = activeComplaint?.id || 1;
     }
 
@@ -92,9 +102,16 @@ export const FeedbackPage: React.FC = () => {
     };
 
     try {
-      createFeedbackResponse({ values: submitData });
-      
-      setIsSubmitted(true);
+      // Direct Supabase insert without Refine
+      const { error } = await supabaseClient
+        .from('feedback_responses')
+        .insert([submitData]);
+
+      if (error) {
+        console.error("Error submitting feedback:", error);
+      } else {
+        setIsSubmitted(true);
+      }
     } catch (error) {
       console.error("Error submitting feedback:", error);
     } finally {
