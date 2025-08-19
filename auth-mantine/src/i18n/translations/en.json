@@ -1,0 +1,109 @@
+{
+  "common": {
+    "actions": "Actions",
+    "create": "Create",
+    "edit": "Edit",
+    "show": "Show",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "download": "Download",
+    "loading": "Loading...",
+    "no_data": "No data available"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "suggestions": "Suggestions",
+    "complaints": "Complaints",
+    "posts": "Posts",
+    "about": "About",
+    "qr_generator": "QR Generator"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "forgot_password": "Forgot Password",
+    "email": "Email",
+    "password": "Password"
+  },
+  "suggestions": {
+    "title": "Suggestions",
+    "create": "New Suggestion",
+    "edit": "Edit Suggestion",
+    "show": "View Suggestion",
+    "description": "Description",
+    "status": "Status",
+    "status_active": "Active",
+    "status_pending": "Pending",
+    "status_approved": "Approved",
+    "status_rejected": "Rejected"
+  },
+  "complaints": {
+    "title": "Complaints",
+    "create": "New Complaint",
+    "edit": "Edit Complaint",
+    "show": "View Complaint",
+    "description": "Description",
+    "status": "Status",
+    "status_active": "Active",
+    "status_pending": "Pending",
+    "status_resolved": "Resolved",
+    "status_rejected": "Rejected"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "suggestions_count": "Total Suggestions",
+    "complaints_count": "Total Complaints",
+    "export_csv": "Export CSV",
+    "feedback_responses": "Feedback Responses"
+  },
+  "qr": {
+    "title": "QR Code Generator",
+    "description": "Generate a QR code that directs users to your feedback form.",
+    "generate": "Generate QR",
+    "regenerate": "Regenerate QR",
+    "download_png": "Download PNG",
+    "copy_url": "Copy URL"
+  },
+  "feedback": {
+    "title": "Feedback Center",
+    "subtitle": "We want to hear your opinion. Select the type of message you want to send.",
+    "suggestion": {
+      "title": "Suggestion",
+      "description": "Share your idea or comment to improve our service.",
+      "button": "Send Suggestion",
+      "form_title": "New Suggestion",
+      "form_label": "Your suggestion",
+      "form_placeholder": "Write your suggestion here...",
+      "alert_message": "Complete the form to send your suggestion. We will review your message and respond soon."
+    },
+    "complaint": {
+      "title": "Complaint",
+      "description": "Let us know what we can improve or what problem you have experienced.",
+      "button": "Send Complaint", 
+      "form_title": "New Complaint",
+      "form_label": "Your complaint",
+      "form_placeholder": "Write your complaint here...",
+      "alert_message": "Complete the form to send your complaint. We will review your message and respond soon."
+    },
+    "form": {
+      "back": "Back",
+      "send": "Send",
+      "sending": "Sending..."
+    },
+    "success": {
+      "title": "Successfully Sent!",
+      "message_suggestion": "Thank you for your suggestion. We have received your message and will review it soon.",
+      "message_complaint": "Thank you for your complaint. We have received your message and will review it soon.",
+      "send_another": "Send another message"
+    }
+  },
+  "language": {
+    "spanish": "Español",
+    "english": "English"
+  }
+}

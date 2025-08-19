@@ -39,6 +39,7 @@ export const SuggestionEdit: React.FC = () => {
           placeholder="Pick one"
           {...getInputProps("status")}
           data={[
+            { label: "Active", value: "active" },
             { label: "Pending", value: "pending" },
             { label: "Approved", value: "approved" },
             { label: "Rejected", value: "rejected" },

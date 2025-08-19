@@ -1,0 +1,109 @@
+{
+  "common": {
+    "actions": "Acciones",
+    "create": "Crear",
+    "edit": "Editar",
+    "show": "Mostrar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "download": "Descargar",
+    "loading": "Cargando...",
+    "no_data": "No hay datos disponibles"
+  },
+  "navigation": {
+    "dashboard": "Panel",
+    "suggestions": "Sugerencias",
+    "complaints": "Reclamos",
+    "posts": "Publicaciones",
+    "about": "Acerca de",
+    "qr_generator": "Generador QR"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "logout": "Cerrar Sesión",
+    "register": "Registrarse",
+    "forgot_password": "Olvidé mi contraseña",
+    "email": "Correo electrónico",
+    "password": "Contraseña"
+  },
+  "suggestions": {
+    "title": "Sugerencias",
+    "create": "Nueva Sugerencia",
+    "edit": "Editar Sugerencia",
+    "show": "Ver Sugerencia",
+    "description": "Descripción",
+    "status": "Estado",
+    "status_active": "Activa",
+    "status_pending": "Pendiente",
+    "status_approved": "Aprobada",
+    "status_rejected": "Rechazada"
+  },
+  "complaints": {
+    "title": "Reclamos",
+    "create": "Nuevo Reclamo",
+    "edit": "Editar Reclamo", 
+    "show": "Ver Reclamo",
+    "description": "Descripción",
+    "status": "Estado",
+    "status_active": "Activo",
+    "status_pending": "Pendiente",
+    "status_resolved": "Resuelto",
+    "status_rejected": "Rechazado"
+  },
+  "dashboard": {
+    "title": "Panel de Control",
+    "suggestions_count": "Total Sugerencias",
+    "complaints_count": "Total Reclamos",
+    "export_csv": "Exportar CSV",
+    "feedback_responses": "Respuestas de Feedback"
+  },
+  "qr": {
+    "title": "Generador de Código QR",
+    "description": "Genera un código QR que dirija a los usuarios a tu formulario de feedback.",
+    "generate": "Generar QR",
+    "regenerate": "Regenerar QR",
+    "download_png": "Descargar PNG",
+    "copy_url": "Copiar URL"
+  },
+  "feedback": {
+    "title": "Centro de Feedback",
+    "subtitle": "Queremos escuchar tu opinión. Selecciona el tipo de mensaje que deseas enviar.",
+    "suggestion": {
+      "title": "Sugerencia",
+      "description": "Comparte tu idea o comentario para mejorar nuestro servicio.",
+      "button": "Enviar Sugerencia",
+      "form_title": "Nueva Sugerencia",
+      "form_label": "Tu sugerencia",
+      "form_placeholder": "Escribe tu sugerencia aquí...",
+      "alert_message": "Completa el formulario para enviar tu sugerencia. Revisaremos tu mensaje y te responderemos pronto."
+    },
+    "complaint": {
+      "title": "Reclamo", 
+      "description": "Déjanos saber qué podemos mejorar o qué problema has experimentado.",
+      "button": "Enviar Reclamo",
+      "form_title": "Nuevo Reclamo",
+      "form_label": "Tu reclamo",
+      "form_placeholder": "Escribe tu reclamo aquí...",
+      "alert_message": "Completa el formulario para enviar tu reclamo. Revisaremos tu mensaje y te responderemos pronto."
+    },
+    "form": {
+      "back": "Volver",
+      "send": "Enviar",
+      "sending": "Enviando..."
+    },
+    "success": {
+      "title": "¡Enviado Exitosamente!",
+      "message_suggestion": "Gracias por tu sugerencia. Hemos recibido tu mensaje y lo revisaremos pronto.",
+      "message_complaint": "Gracias por tu reclamo. Hemos recibido tu mensaje y lo revisaremos pronto.",
+      "send_another": "Enviar otro mensaje"
+    }
+  },
+  "language": {
+    "spanish": "Español",
+    "english": "English"
+  }
+}

@@ -13,6 +13,8 @@ import {
   Card,
   MantineProvider,
   Global,
+  Select,
+  Flex,
 } from "@mantine/core";
 import {
   IconBulb,
@@ -20,8 +22,12 @@ import {
   IconCheck,
   IconSend,
   IconArrowLeft,
+  IconLanguage,
 } from "@tabler/icons-react";
+import { useTranslation } from 'react-i18next';
 import { supabaseClient } from "../../utility/supabaseClient";
+import { FeedbackLogo } from "../../components/logobrand/FeedbackLogo";
+import '../../i18n';
 
 type FeedbackType = "suggestion" | "complaint" | null;
 
@@ -31,21 +37,26 @@ interface FormData {
 
 interface ISuggestion {
   id: number;
-  status: "pending" | "approved" | "rejected";
+  status: "active" | "pending" | "approved" | "rejected";
 }
 
 interface IComplaint {
   id: number;
-  status: "pending" | "resolved" | "rejected";
+  status: "active" | "pending" | "resolved" | "rejected";
 }
 
 export const StandaloneFeedback: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [selectedType, setSelectedType] = useState<FeedbackType>(null);
   const [formData, setFormData] = useState<FormData>({ response: "" });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [suggestionsData, setSuggestionsData] = useState<ISuggestion[]>([]);
   const [complaintsData, setComplaintsData] = useState<IComplaint[]>([]);
+
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
+  };
 
   // Load active suggestions and complaints on component mount
   React.useEffect(() => {
@@ -54,12 +65,12 @@ export const StandaloneFeedback: React.FC = () => {
         const { data: suggestions } = await supabaseClient
           .from('suggestions')
           .select('*')
-          .eq('status', 'approved');
+          .eq('status', 'active');
         
         const { data: complaints } = await supabaseClient
           .from('complaints')
           .select('*')
-          .eq('status', 'resolved');
+          .eq('status', 'active');
 
         setSuggestionsData(suggestions || []);
         setComplaintsData(complaints || []);
@@ -94,10 +105,10 @@ export const StandaloneFeedback: React.FC = () => {
     let reference_id = 1; // fallback por defecto
     
     if (selectedType === "suggestion" && suggestionsData.length > 0) {
-      const activeSuggestion = suggestionsData.find(s => s.status === "approved");
+      const activeSuggestion = suggestionsData.find(s => s.status === "active");
       reference_id = activeSuggestion?.id || 1;
     } else if (selectedType === "complaint" && complaintsData.length > 0) {
-      const activeComplaint = complaintsData.find(c => c.status === "resolved");
+      const activeComplaint = complaintsData.find(c => c.status === "active");
       reference_id = activeComplaint?.id || 1;
     }
 
@@ -150,12 +161,14 @@ export const StandaloneFeedback: React.FC = () => {
               </div>
               
               <Title order={2} ta="center" c="green">
-                ¡Enviado Exitosamente!
+                {t('feedback.success.title')}
               </Title>
               
               <Text ta="center" c="dimmed">
-                Gracias por tu {selectedType === "suggestion" ? "sugerencia" : "reclamo"}. 
-                Hemos recibido tu mensaje y lo revisaremos pronto.
+                {selectedType === "suggestion" 
+                  ? t('feedback.success.message_suggestion')
+                  : t('feedback.success.message_complaint')
+                }
               </Text>
 
               <Button
@@ -164,7 +177,7 @@ export const StandaloneFeedback: React.FC = () => {
                 size="md"
               >
                 <IconArrowLeft size={16} style={{ marginRight: 8 }} />
-                Enviar otro mensaje
+                {t('feedback.success.send_another')}
               </Button>
             </Stack>
           </Paper>
@@ -175,14 +188,29 @@ export const StandaloneFeedback: React.FC = () => {
 
   return (
     <Container size="md" py="xl">
+      {/* Language Selector */}
+      <Flex justify="flex-end" mb="md">
+        <Select
+          data={[
+            { value: 'es', label: t('language.spanish') },
+            { value: 'en', label: t('language.english') }
+          ]}
+          value={i18n.language}
+          onChange={(value) => value && changeLanguage(value)}
+          w={150}
+        />
+      </Flex>
+
+      {/* Logo */}
+      <Center mb="xl">
+        <FeedbackLogo />
+      </Center>
+
       <Paper shadow="md" p="xl" radius="lg" withBorder>
         <Stack spacing="xl">
           <div>
-            <Title order={1} ta="center" mb="xs">
-              Centro de Feedback
-            </Title>
             <Text ta="center" c="dimmed" size="lg">
-              Queremos escuchar tu opinión. Selecciona el tipo de mensaje que deseas enviar.
+              {t('feedback.subtitle')}
             </Text>
           </div>
 
@@ -211,13 +239,13 @@ export const StandaloneFeedback: React.FC = () => {
                     <IconBulb size={40} color="#1976d2" />
                   </div>
                   <Title order={3} ta="center">
-                    Sugerencia
+                    {t('feedback.suggestion.title')}
                   </Title>
                   <Text ta="center" c="dimmed">
-                    Comparte tu idea o comentario para mejorar nuestro servicio.
+                    {t('feedback.suggestion.description')}
                   </Text>
                   <Button fullWidth>
-                    Enviar Sugerencia
+                    {t('feedback.suggestion.button')}
                   </Button>
                 </Stack>
               </Card>
@@ -245,13 +273,13 @@ export const StandaloneFeedback: React.FC = () => {
                     <IconAlertTriangle size={40} color="#f57c00" />
                   </div>
                   <Title order={3} ta="center">
-                    Reclamo
+                    {t('feedback.complaint.title')}
                   </Title>
                   <Text ta="center" c="dimmed">
-                    Déjanos saber qué podemos mejorar o qué problema has experimentado.
+                    {t('feedback.complaint.description')}
                   </Text>
                   <Button fullWidth color="orange">
-                    Enviar Reclamo
+                    {t('feedback.complaint.button')}
                   </Button>
                 </Stack>
               </Card>
@@ -262,14 +290,14 @@ export const StandaloneFeedback: React.FC = () => {
             <Stack spacing="lg">
               <Group position="apart" align="center">
                 <Title order={2}>
-                  {selectedType === "suggestion" ? "Nueva Sugerencia" : "Nuevo Reclamo"}
+                  {selectedType === "suggestion" ? t('feedback.suggestion.form_title') : t('feedback.complaint.form_title')}
                 </Title>
                 <Button
                   variant="subtle"
                   onClick={() => setSelectedType(null)}
                 >
                   <IconArrowLeft size={16} style={{ marginRight: 8 }} />
-                  Volver
+                  {t('feedback.form.back')}
                 </Button>
               </Group>
 
@@ -277,15 +305,14 @@ export const StandaloneFeedback: React.FC = () => {
                 icon={selectedType === "suggestion" ? <IconBulb size="1rem" /> : <IconAlertTriangle size="1rem" />}
                 color={selectedType === "suggestion" ? "blue" : "orange"}
               >
-                Completa el formulario para enviar tu {selectedType === "suggestion" ? "sugerencia" : "reclamo"}.
-                Revisaremos tu mensaje y te responderemos pronto.
+                {selectedType === "suggestion" ? t('feedback.suggestion.alert_message') : t('feedback.complaint.alert_message')}
               </Alert>
 
               <form onSubmit={handleSubmit}>
                 <Stack spacing="md">
                   <Textarea
-                    label={selectedType === "suggestion" ? "Tu sugerencia" : "Tu reclamo"}
-                    placeholder={`Escribe tu ${selectedType === "suggestion" ? "sugerencia" : "reclamo"} aquí...`}
+                    label={selectedType === "suggestion" ? t('feedback.suggestion.form_label') : t('feedback.complaint.form_label')}
+                    placeholder={selectedType === "suggestion" ? t('feedback.suggestion.form_placeholder') : t('feedback.complaint.form_placeholder')}
                     required
                     minRows={5}
                     value={formData.response}
@@ -302,7 +329,7 @@ export const StandaloneFeedback: React.FC = () => {
                       color={selectedType === "suggestion" ? "blue" : "orange"}
                     >
                       <IconSend size={16} style={{ marginRight: 8 }} />
-                      {isSubmitting ? "Enviando..." : "Enviar"}
+                      {isSubmitting ? t('feedback.form.sending') : t('feedback.form.send')}
                     </Button>
                   </Group>
                 </Stack>

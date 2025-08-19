@@ -6,7 +6,7 @@ export const SuggestionCreate: React.FC = () => {
     initialValues: {
       title: "",
       description: "",
-      status: "pending",
+      status: "active",
     },
     validate: {
       title: (value) => (value.length < 2 ? "Too short title" : null),
@@ -36,6 +36,7 @@ export const SuggestionCreate: React.FC = () => {
           placeholder="Pick one"
           {...getInputProps("status")}
           data={[
+            { label: "Active", value: "active" },
             { label: "Pending", value: "pending" },
             { label: "Approved", value: "approved" },
             { label: "Rejected", value: "rejected" },

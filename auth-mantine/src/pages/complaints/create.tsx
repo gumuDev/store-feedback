@@ -6,7 +6,7 @@ export const ComplaintCreate: React.FC = () => {
     initialValues: {
       title: "",
       description: "",
-      status: "pending",
+      status: "active",
     },
     validate: {
       title: (value) => (value.length < 2 ? "Too short title" : null),
@@ -36,6 +36,7 @@ export const ComplaintCreate: React.FC = () => {
           placeholder="Pick one"
           {...getInputProps("status")}
           data={[
+            { label: "Active", value: "active" },
             { label: "Pending", value: "pending" },
             { label: "Resolved", value: "resolved" },
             { label: "Rejected", value: "rejected" },

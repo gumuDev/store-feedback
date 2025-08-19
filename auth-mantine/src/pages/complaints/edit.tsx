@@ -39,6 +39,7 @@ export const ComplaintEdit: React.FC = () => {
           placeholder="Pick one"
           {...getInputProps("status")}
           data={[
+            { label: "Active", value: "active" },
             { label: "Pending", value: "pending" },
             { label: "Resolved", value: "resolved" },
             { label: "Rejected", value: "rejected" },

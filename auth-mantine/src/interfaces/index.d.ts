@@ -18,7 +18,7 @@ export interface ISuggestion {
   title: string;
   description: string;
   created_at: string;
-  status: "pending" | "approved" | "rejected";
+  status: "active" | "pending" | "approved" | "rejected";
 }
 
 export interface IComplaint {
@@ -26,7 +26,7 @@ export interface IComplaint {
   title: string;
   description: string;
   created_at: string;
-  status: "pending" | "resolved" | "rejected";
+  status: "active" | "pending" | "resolved" | "rejected";
 }
 
 export interface IFeedbackResponse {

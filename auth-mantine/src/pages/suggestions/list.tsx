@@ -59,8 +59,9 @@ export const SuggestionList: React.FC = () => {
           filterElement: function render(props: FilterElementProps) {
             return (
               <Select
-                defaultValue="pending"
+                defaultValue="active"
                 data={[
+                  { label: "Active", value: "active" },
                   { label: "Pending", value: "pending" },
                   { label: "Approved", value: "approved" },
                   { label: "Rejected", value: "rejected" },

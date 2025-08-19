@@ -59,8 +59,9 @@ export const ComplaintList: React.FC = () => {
           filterElement: function render(props: FilterElementProps) {
             return (
               <Select
-                defaultValue="pending"
+                defaultValue="active"
                 data={[
+                  { label: "Active", value: "active" },
                   { label: "Pending", value: "pending" },
                   { label: "Resolved", value: "resolved" },
                   { label: "Rejected", value: "rejected" },
