@@ -26,8 +26,8 @@ export const StatsCard: React.FC<StatsCardProps> = ({
   const change = calculateChange();
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
-      <Group justify="space-between" mb="xs">
+    <Card shadow="sm" p="lg" radius="md" withBorder>
+      <Group position="apart" mb="xs">
         <Text size="sm" c="dimmed" fw={600}>
           {title}
         </Text>
@@ -44,14 +44,12 @@ export const StatsCard: React.FC<StatsCardProps> = ({
             color={isPositive ? "green" : "red"}
             variant="light"
             size="sm"
-            leftSection={
-              isPositive ? (
-                <IconArrowUpRight size={12} />
-              ) : (
-                <IconArrowDownRight size={12} />
-              )
-            }
           >
+            {isPositive ? (
+              <IconArrowUpRight size={12} style={{ marginRight: 4 }} />
+            ) : (
+              <IconArrowDownRight size={12} style={{ marginRight: 4 }} />
+            )}
             {change}%
           </Badge>
         )}

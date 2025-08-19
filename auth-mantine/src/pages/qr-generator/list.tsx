@@ -105,9 +105,9 @@ export const QRGeneratorList: React.FC = () => {
                 <Button
                   onClick={generateQR}
                   loading={isGenerating}
-                  leftSection={<IconQrcode size={16} />}
                   size="md"
                 >
+                  <IconQrcode size={16} style={{ marginRight: 8 }} />
                   {qrDataURL ? "Regenerate QR Code" : "Generate QR Code"}
                 </Button>
                 
@@ -115,9 +115,9 @@ export const QRGeneratorList: React.FC = () => {
                   <Button
                     onClick={downloadQR}
                     variant="light"
-                    leftSection={<IconDownload size={16} />}
                     size="md"
                   >
+                    <IconDownload size={16} style={{ marginRight: 8 }} />
                     Download PNG
                   </Button>
                 )}
