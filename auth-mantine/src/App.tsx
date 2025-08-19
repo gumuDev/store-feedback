@@ -22,9 +22,9 @@ import routerProvider, {
   DocumentTitleHandler,
 } from "@refinedev/react-router";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
-import { IconBrandGoogle, IconBrandGithub, IconMoneybag, IconBulb, IconAlertTriangle } from "@tabler/icons-react";
+import { IconBrandGoogle, IconBrandGithub, IconMoneybag, IconBulb, IconAlertTriangle, IconDashboard, IconQrcode } from "@tabler/icons-react";
 
-import { PostCreate, PostEdit, PostList, PostShow, SuggestionCreate, SuggestionEdit, SuggestionList, SuggestionShow, ComplaintCreate, ComplaintEdit, ComplaintList, ComplaintShow } from "./pages";
+import { PostCreate, PostEdit, PostList, PostShow, SuggestionCreate, SuggestionEdit, SuggestionList, SuggestionShow, ComplaintCreate, ComplaintEdit, ComplaintList, ComplaintShow, FeedbackResponseCreate, FeedbackResponseEdit, FeedbackResponseList, FeedbackResponseShow, QRGeneratorList, FeedbackPage } from "./pages";
 import { AboutList } from "./pages/about/list";
 import { CustomTitle } from "./components/logobrand/CustomTitle";
 
@@ -206,6 +206,25 @@ const App: React.FC = () => {
                   icon: <IconAlertTriangle/>
                 }
               },
+              {
+                name: "feedback_responses",
+                list: "/dashboard",
+                show: "/feedback-responses/show/:id",
+                edit: "/feedback-responses/edit/:id",
+                create: "/feedback-responses/create",
+                meta: {
+                  label: "Dashboard",
+                  icon: <IconDashboard/>
+                }
+              },
+              {
+                name: "qr_generator",
+                list: "/qr-generator",
+                meta: {
+                  label: "QR Generator",
+                  icon: <IconQrcode/>
+                }
+              },
             ]}
             options={{
               syncWithLocation: true,
@@ -227,7 +246,7 @@ const App: React.FC = () => {
               >
                 <Route
                   index
-                  element={<NavigateToResource resource="posts" />}
+                  element={<NavigateToResource resource="feedback_responses" />}
                 />
 
                 <Route path="/posts">
@@ -248,8 +267,18 @@ const App: React.FC = () => {
                   <Route path="edit/:id" element={<ComplaintEdit />} />
                   <Route path="show/:id" element={<ComplaintShow />} />
                 </Route>
+                <Route path="/dashboard" element={<FeedbackResponseList />} />
+                <Route path="/feedback-responses">
+                  <Route path="create" element={<FeedbackResponseCreate />} />
+                  <Route path="edit/:id" element={<FeedbackResponseEdit />} />
+                  <Route path="show/:id" element={<FeedbackResponseShow />} />
+                </Route>
+                <Route path="/qr-generator" element={<QRGeneratorList />} />
                 <Route path="/about" element={<AboutList />} />
               </Route>
+
+              {/* Public feedback route - no authentication required */}
+              <Route path="/feedback" element={<FeedbackPage />} />
 
               <Route
                 element={

@@ -29,6 +29,14 @@ export interface IComplaint {
   status: "pending" | "resolved" | "rejected";
 }
 
+export interface IFeedbackResponse {
+  id: number;
+  type: "suggestion" | "complaint";
+  reference_id: number;
+  response: string;
+  created_at: string;
+}
+
 export interface ColumnButtonProps {
   column: Column<any, any>; // eslint-disable-line
 }
