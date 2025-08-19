@@ -13,7 +13,8 @@ import {
 } from "@refinedev/mantine";
 import { NotificationsProvider } from "@mantine/notifications";
 import { MantineProvider, Global } from "@mantine/core";
-import dataProvider from "@refinedev/simple-rest";
+import { dataProvider } from "@refinedev/supabase";
+import { supabaseClient } from "./utility/supabaseClient";
 import routerProvider, {
   NavigateToResource,
   CatchAllNavigate,
@@ -21,9 +22,9 @@ import routerProvider, {
   DocumentTitleHandler,
 } from "@refinedev/react-router";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
-import { IconBrandGoogle, IconBrandGithub, IconInfoCircle, IconMoneybag } from "@tabler/icons-react";
+import { IconBrandGoogle, IconBrandGithub, IconMoneybag, IconBulb, IconAlertTriangle } from "@tabler/icons-react";
 
-import { PostCreate, PostEdit, PostList, PostShow } from "./pages";
+import { PostCreate, PostEdit, PostList, PostShow, SuggestionCreate, SuggestionEdit, SuggestionList, SuggestionShow, ComplaintCreate, ComplaintEdit, ComplaintList, ComplaintShow } from "./pages";
 import { AboutList } from "./pages/about/list";
 import { CustomTitle } from "./components/logobrand/CustomTitle";
 
@@ -163,7 +164,7 @@ const App: React.FC = () => {
         <Global styles={{ body: { WebkitFontSmoothing: "auto" } }} />
         <NotificationsProvider position="top-right">
           <Refine
-            dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+            dataProvider={dataProvider(supabaseClient)}
             authProvider={authProvider}
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
@@ -181,6 +182,28 @@ const App: React.FC = () => {
                 meta: {
                   label: "About", 
                   icon: <IconMoneybag/>
+                }
+              },
+              {
+                name: "suggestions",
+                list: "/suggestions",
+                show: "/suggestions/show/:id",
+                edit: "/suggestions/edit/:id",
+                create: "/suggestions/create",
+                meta: {
+                  label: "Suggestions",
+                  icon: <IconBulb/>
+                }
+              },
+              {
+                name: "complaints",
+                list: "/complaints",
+                show: "/complaints/show/:id",
+                edit: "/complaints/edit/:id",
+                create: "/complaints/create",
+                meta: {
+                  label: "Complaints",
+                  icon: <IconAlertTriangle/>
                 }
               },
             ]}
@@ -212,6 +235,18 @@ const App: React.FC = () => {
                   <Route path="create" element={<PostCreate />} />
                   <Route path="edit/:id" element={<PostEdit />} />
                   <Route path="show/:id" element={<PostShow />} />
+                </Route>
+                <Route path="/suggestions">
+                  <Route index element={<SuggestionList />} />
+                  <Route path="create" element={<SuggestionCreate />} />
+                  <Route path="edit/:id" element={<SuggestionEdit />} />
+                  <Route path="show/:id" element={<SuggestionShow />} />
+                </Route>
+                <Route path="/complaints">
+                  <Route index element={<ComplaintList />} />
+                  <Route path="create" element={<ComplaintCreate />} />
+                  <Route path="edit/:id" element={<ComplaintEdit />} />
+                  <Route path="show/:id" element={<ComplaintShow />} />
                 </Route>
                 <Route path="/about" element={<AboutList />} />
               </Route>

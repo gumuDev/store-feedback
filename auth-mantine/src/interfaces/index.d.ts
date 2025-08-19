@@ -13,6 +13,22 @@ export interface IPost {
   category: { id: number };
 }
 
+export interface ISuggestion {
+  id: number;
+  title: string;
+  description: string;
+  created_at: string;
+  status: "pending" | "approved" | "rejected";
+}
+
+export interface IComplaint {
+  id: number;
+  title: string;
+  description: string;
+  created_at: string;
+  status: "pending" | "resolved" | "rejected";
+}
+
 export interface ColumnButtonProps {
   column: Column<any, any>; // eslint-disable-line
 }
