@@ -24,7 +24,8 @@ import routerProvider, {
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import { IconBrandGoogle, IconBrandGithub, IconMoneybag, IconBulb, IconAlertTriangle, IconDashboard, IconQrcode } from "@tabler/icons-react";
 
-import { PostCreate, PostEdit, PostList, PostShow, SuggestionCreate, SuggestionEdit, SuggestionList, SuggestionShow, ComplaintCreate, ComplaintEdit, ComplaintList, ComplaintShow, FeedbackResponseCreate, FeedbackResponseEdit, FeedbackResponseList, FeedbackResponseShow, QRGeneratorList, FeedbackPage } from "./pages";
+import { PostCreate, PostEdit, PostList, PostShow, SuggestionCreate, SuggestionEdit, SuggestionList, SuggestionShow, ComplaintCreate, ComplaintEdit, ComplaintList, ComplaintShow, FeedbackResponseCreate, FeedbackResponseEdit, FeedbackResponseList, FeedbackResponseShow, QRGeneratorList } from "./pages";
+import { StandaloneFeedback } from "./pages/feedback/StandaloneFeedback";
 import { AboutList } from "./pages/about/list";
 import { CustomTitle } from "./components/logobrand/CustomTitle";
 
@@ -154,6 +155,20 @@ const App: React.FC = () => {
     }),
   };
 
+  // Check if current path is /feedback to render standalone page
+  if (window.location.pathname === '/feedback') {
+    return (
+      <MantineProvider
+        theme={RefineThemes.Blue}
+        withNormalizeCSS
+        withGlobalStyles
+      >
+        <Global styles={{ body: { WebkitFontSmoothing: "auto" } }} />
+        <StandaloneFeedback />
+      </MantineProvider>
+    );
+  }
+
   return (
     <BrowserRouter>
       <MantineProvider
@@ -162,12 +177,7 @@ const App: React.FC = () => {
         withGlobalStyles
       >
         <Global styles={{ body: { WebkitFontSmoothing: "auto" } }} />
-        <NotificationsProvider position="top-right">
-          <Routes>
-            {/* Public feedback route - completely outside Refine context */}
-            <Route path="/feedback" element={<FeedbackPage />} />
-          </Routes>
-          
+        <NotificationsProvider position="top-right">          
           <Refine
             dataProvider={dataProvider(supabaseClient)}
             authProvider={authProvider}
